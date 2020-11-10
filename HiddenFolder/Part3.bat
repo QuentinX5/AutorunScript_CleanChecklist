@@ -7,17 +7,18 @@ cd ..
 cd ..
 cd 07_Add-Remove
 set INPUT=
-set /P INPUT=Would you like to use Windows Uninstaller or the iOBit Uninstaller? (W/I)
+set /p INPUT=Would you like to use Windows Uninstaller or the iOBit Uninstaller? (W/I)
 If "%INPUT%"=="W" goto winUni
+If "%INPUT%"=="w" goto winUni
 If "%INPUT%"=="I" goto ioBit
+If "%INPUT%"=="i" goto ioBit
 :winUni
 appwiz.cpl
-pause
 goto skip1
 :ioBit
 call iOBit.bat
-pause
 :skip1
+pause
 ECHO %~dp0
 cd ..
 cd 08_ATF
@@ -39,8 +40,15 @@ pause
 cd ..
 cd 10_Autoruns
 ECHO Step 10: Autoruns (Used to clean up start menu items)
+IF EXIST "%PROGRAMFILES(X86)%" (goto 64bit2) else (goto 32bit2)
+:32bit2
 autoruns.exe
 pause
+goto skip3
+:64bit2
+autoruns64.exe
+pause
+:skip3
 cd ..
 cd "000_Autorun-Script"
 cd "Hidden Folder"

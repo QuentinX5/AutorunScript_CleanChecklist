@@ -21,7 +21,7 @@ pause
 cd ..
 cd 13_MalwareBytes
 ECHO Step 13: MalwareBytes Anti-Malware (Used to remove malware)
-mbam-setup-2.1.8.1057.exe
+mbam-setup.exe
 ECHO Restart the PC after MalwareBytes finishes to continue the cleanup process...
 cd ..
 cd "000_Autorun-Script"

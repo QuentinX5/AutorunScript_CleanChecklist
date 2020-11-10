@@ -25,25 +25,22 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------
 
-ECHO OFF
-ECHO Welcome to the Autorun Script for PC Cleaning!
-set INPUT=
-set /P INPUT=Would you like to begin cleaning the PC now? (Y/N) %=%
-If /I "%INPUT%"=="y" goto yes1 
-If /I "%INPUT%"=="n" goto quit
-:yes1
-ECHO Running script...
-set INPUT=
-set /P INPUT=Have you completed the hardware diagnostics? (Y/N) %=%
-If /I "%INPUT%"=="y" goto yes2
-If /I "%INPUT%"=="n" goto no2
-:yes2
-cd "HiddenFolder"
-Part2.bat
+@ECHO OFF
+SET INPUT=
+SET /P INPUT=Are Windows updates fully finished? %=%
+If "%INPUT%"=="Y" goto yes
+If "%INPUT%"=="y" goto yes
+If "%INPUT%"=="N" goto no
+If "%INPUT%"=="n" goto no
+:yes
+SET output=cleanDir.txt
+FOR /F "tokens=*" %%L IN (%output%) DO (
+    SET DIRECTORY=%%L
+)
+cd /d %DIRECTORY%
+call Part7.bat
 exit
-:no2
-cd "HiddenFolder"
-Part1.bat
-:quit
-ECHO Exiting program...
-pause
+:no
+ECHO Continuing to run Windows Updates...
+wuapp
+exit

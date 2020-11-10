@@ -26,19 +26,9 @@ if '%errorlevel%' NEQ '0' (
 :--------------------------------------
 
 @ECHO OFF
-SET INPUT=
-SET /P INPUT=Are Windows updates fully finished? %=%
-If /I "%INPUT%"=="y" goto yes
-If /I "%INPUT%"=="n" goto no
-:yes
 SET output=cleanDir.txt
 FOR /F "tokens=*" %%L IN (%output%) DO (
     SET DIRECTORY=%%L
 )
 cd /d %DIRECTORY%
-call Part7.bat
-exit
-:no
-ECHO Continuing to run Windows Updates...
-wuapp
-exit
+call Part6.bat

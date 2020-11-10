@@ -59,6 +59,16 @@ ECHO Opening up ADWCleaner...
 cd ..
 cd ..
 cd 07_Add-Remove
-adwcleaner_5.004.exe
+adwcleaner.exe
 ECHO Cleanup will continue after PC restarts...
+set INPUT=
+set /p INPUT=Do you want to restart the PC now? (Y/N)
+If "%INPUT%"=="Y" goto restartPC
+If "%INPUT%"=="y" goto restartPC
+If "%INPUT%"=="N" goto notYet
+If "%INPUT%"=="n" goto notYet
+:restartPC
+shutdown -r -t 0
+pause
+:notYet
 pause

@@ -3,7 +3,7 @@ set DIRECTORY=
 set STARTUP=
 set DIRECTORY=%~dp0
 set STARTUP=%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup\
-del "%STARTUP%Continue3.bat"
+del "%STARTUP%Continue4.bat"
 del "%STARTUP%cleanDir.txt"
 cd ..
 cd ..
@@ -15,38 +15,43 @@ pause
 cd ..
 cd 22_CCleaner
 ECHO Step 22: CCleaner (Deep clean for temporary files and registry)
-IF EXIST "%PROGRAMFILES(X86)%" (goto 64bit) else (goto 32bit)
-:32bit
+IF EXIST "%PROGRAMFILES(X86)%" (goto 64bit1) else (goto 32bit1)
+:32bit1
 call CCleaner.bat
-pause
 goto skip1
-:64bit
+:64bit1
 call CCleaner64.bat
-pause
 :skip1
+pause
 cd ..
 cd 23_Autoruns
 ECHO Step 23: Autoruns (Used to clean up start menu items)
-call Autoruns.bat
+IF EXIST "%PROGRAMFILES(X86)%" (goto 64bit2) else (goto 32bit2)
+:32bit2
+autoruns.exe
+goto skip2
+:64bit2
+autoruns64.exe
+:skip2
 pause
 cd ..
 cd 24_Defrag
 ECHO Step 24: Defrag PC (Helps to organize data on the hard drive)
-IF EXIST "%PROGRAMFILES(X86)%" (goto 64bit) else (goto 32bit)
-:32bit2
+IF EXIST "%PROGRAMFILES(X86)%" (goto 64bit3) else (goto 32bit3)
+:32bit3
 cd "MyDefrag-v4.3.1"
 cd x32
 start MyDefrag.exe
 cd ..
 cd ..
-goto skip2
-:64bit2
+goto skip3
+:64bit3
 cd "MyDefrag-v4.3.1"
 cd x64
 start MyDefrag.exe
 cd ..
 cd ..
-:skip2
+:skip3
 pause
 ECHO Step 25: Open MSConfig (For Windows 8 and up, located in Task Manager) (msconfig)
 SET osversion=
@@ -58,15 +63,15 @@ if "%version%" == "6.1" SET osversion=1
 if "%version%" == "6.0" SET osversion=1
 if "%version%" == "5.2" SET osversion=1
 if "%version%" == "5.1" SET osversion=1
-if "%osversion%" == "1" goto 7andlow
-if "%osversion%" == "2" goto 8andup
-if "%osversion%" == "3" goto 8andup
+if "%osversion%" == "1" goto yes1
+if "%osversion%" == "2" goto yes1
+if "%osversion%" == "3" goto no1
 :7andlow
 msconfig
-goto skip1
+goto skip4
 :8andup
 taskmgr
-:skip1
+:skip4
 pause
 ECHO Step 26: Remove Tools (Uninstall any programs, delete files, etc)
 cd ..
@@ -84,6 +89,6 @@ cd %DIRECTORY%
 cls
 ECHO Step 28: The PC is finished!
 ECHO Congratulations and thank you for using this script!
-ECHO Created by QuentinX5 (Copyright 2015)
+ECHO Created by QuentinX5 (Copyright 2016)
 ECHO (For any other issues, use the Last Resort Tools)
 pause
